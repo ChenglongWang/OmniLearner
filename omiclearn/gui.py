@@ -6,7 +6,7 @@ def run():
     _this_file = os.path.abspath(__file__)
     _this_directory = os.path.dirname(_this_file)
 
-    file_path = os.path.join(_this_directory, 'omic_learn.py')
+    file_path = os.path.join(_this_directory, 'omni_learner.py')
 
     HOME = os.path.expanduser("~")
     ST_PATH = os.path.join(HOME, ".streamlit")
@@ -22,7 +22,7 @@ def run():
             file.write("[general]\n")
             file.write('\nemail = ""')
 
-    print(f'Starting OmicLearn from {file_path}')
+    print(f'Starting Omnilearner from {file_path}')
 
     args = ["streamlit", "run", file_path, "--global.developmentMode=false", "--browser.gatherUsageStats=False"]
 

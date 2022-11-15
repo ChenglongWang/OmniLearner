@@ -1,18 +1,18 @@
 #!python
 
 
-__project__ = "omiclearn"
+__project__ = "omnilearner"
 __version__ = "1.3"
 __license__ = "Apache"
-__description__ = "Transparent exploration of machine learning for biomarker discovery from proteomics and omics data"
-__author__ = "MannLabs"
-__author_email__ = "mstrauss@biochem.mpg.de"
-__github__ = "https://github.com/MannLabs/OmicLearn"
+__description__ = "Transparent exploration of machine learning for structrual data"
+__author__ = "MannLabs;Chenglong Wang"
+__author_email__ = "clwang@phy.ecnu.edu.cn"
+__github__ = "https://github.com/ChenglongWang/OmniLearner"
 __keywords__ = [
     "bioinformatics",
     "software",
 ]
-__python_version__ = ">=3.7,<3.10"
+__python_version__ = ">=3.7,<3.11"
 __classifiers__ = [
     #"Development Status :: 1 - Planning",
     # "Development Status :: 2 - Pre-Alpha",
@@ -28,7 +28,7 @@ __classifiers__ = [
     "Topic :: Scientific/Engineering :: Bio-Informatics",
 ]
 __console_scripts__ = [
-    "omiclearn=omiclearn.gui:run",
+    "omnilearner=omiclearn.gui:run",
 ]
 __urls__ = {
     "GitHub": __github__,

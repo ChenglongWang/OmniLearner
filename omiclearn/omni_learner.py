@@ -1,5 +1,4 @@
 """OmicLearn main file."""
-import random
 import warnings
 import pandas as pd
 from PIL import Image
@@ -47,7 +46,7 @@ _this_file = os.path.abspath(__file__)
 _this_directory = os.path.dirname(_this_file)
 
 # Set the configs
-APP_TITLE = "OmicLearn — ML platform for omics datasets"
+APP_TITLE = "OmniLearner — ML platform for structual datasets"
 st.set_page_config(
     page_title=APP_TITLE,
     page_icon=Image.open(os.path.join(_this_directory,"utils/omic_learn.ico")),
