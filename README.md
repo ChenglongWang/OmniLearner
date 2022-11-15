@@ -1,79 +1,70 @@
-<p align="center"> <img src="omiclearn.png" height="270" width="277" /> </p>
-<h2 align="center">Online version: <a href="https://share.streamlit.io/MannLabs/OmicLearn/omiclearn/omic_learn.py" target="_blank">OmicLearn</a> </h2>
+<!-- <p align="center"> <img src="OmniLearner.png" height="270" width="277" /> </p> -->
+<!-- <h2 align="center">Online version: <a href="https://share.streamlit.io/MannLabs/OmniLearner/OmniLearner/omni_learner.py" target="_blank">OmniLearner</a> </h2> -->
 
-<h2 align="center"> 📰 Manual and Documentation: <a href="https://omiclearn.readthedocs.io/en/latest/" target="_blank">OmicLearn ReadTheDocs </a> </h2>
+<!-- <h2 align="center"> 📰 Manual and Documentation: <a href="https://OmniLearner.readthedocs.io/en/latest/" target="_blank">OmniLearner ReadTheDocs </a> </h2> -->
 
-![OmicLearn Tests](https://github.com/MannLabs/OmicLearn/workflows/OmicLearn%20Tests/badge.svg)
-![OmicLearn Python Badges](https://img.shields.io/badge/Tested_with_Python-3.8-blue)
-![OmicLearn Version](https://img.shields.io/badge/Release-v1.3-orange)
-![OmicLearn Release](https://img.shields.io/badge/Release%20Date-October%202022-green)
-![OmicLearn License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)
+![OmniLearner Python Badges](https://img.shields.io/badge/Tested_with_Python-3.8-blue)
+![OmniLearner Version](https://img.shields.io/badge/Release-v1.3-orange)
+![OmniLearner Release](https://img.shields.io/badge/Release%20Date-October%202022-green)
+![OmniLearner License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)
 
 ---
-# OmicLearn
+# OmniLearner
 
-Transparent exploration of machine learning for biomarker discovery from proteomics and omics data. This is a maintained fork from [OmicEra](https://github.com/OmicEra/OmicLearn).
+Transparent exploration of machine learning for biomarker discovery from structural data. This is another development fork from [OmicLearn](https://github.com/MannLabs/OmicLearn).
 
 ## Quickstart
-A three minute quickstart video to showcase OmicLearn can be found [here](https://youtu.be/VE9pj1G89io).
-
-## Manuscript
-📰 <a href="https://doi.org/10.1101/2021.03.05.434053" target="_blank">Open-access article: **Transparent exploration of machine learning for biomarker discovery from proteomics and omics data**</a>
-
-> **Citation:** <br>
-> Transparent exploration of machine learning for biomarker discovery from proteomics and omics data <br>
-> Furkan M Torun, Sebastian Virreira Winter, Sophia Doll, Felix M Riese, Artem Vorobyev, Johannes B Müller-Reif, Philipp E Geyer, Maximilian T Strauss <br>
-> bioRxiv 2021.03.05.434053; doi: https://doi.org/10.1101/2021.03.05.434053
+A three minute quickstart video to showcase OmniLearner can be found [here](https://youtube.com).
 
 
 ## Online Access
 
-🟢  <a href="https://share.streamlit.io/MannLabs/OmicLearn/omiclearn/omic_learn.py" target="_blank"> Streamlit share</a>
+🟢 <a href="" target="_blank"> Streamlit share</a>
 
-This is an online version hosted by streamlit using free cloud resources, which might have limited performance. Use the local installation to run OmicLearn on your own hardware.
+This is an online version hosted by streamlit using free cloud resources, which might have limited performance. Use the local installation to run OmniLearner on your own hardware.
 
 ## Local Installation
 
-### One-click Installation
+### One-click Installation (**Not available yet**)
 
-You can use the one-click installer to install OmicLearn as an application locally.
+You can use the one-click installer to install OmniLearner as an application locally.
 Click on one of the links below to download the latest release for:
 
-[**Windows**](https://github.com/MannLabs/OmicLearn/releases/latest/download/omiclearn_gui_installer_windows.exe), [**macOS**](https://github.com/MannLabs/OmicLearn/releases/latest/download/omiclearn_gui_installer_macos.pkg), [**Linux**](https://github.com/MannLabs/OmicLearn/releases/latest/download/omiclearn_gui_installer_linux.deb)
+[**Windows**], [**macOS**], [**Linux**]
 
-For detailed installation instructions of the one-click installers refer to the [documentation](https://omiclearn.readthedocs.io/en/latest/ONE_CLICK.html).
+For detailed installation instructions of the one-click installers refer to the [documentation](https://OmniLearner.readthedocs.io/en/latest/ONE_CLICK.html).
 
 ### Python Installation
 
-- It is strongly recommended to install OmicLearn in its own environment using [Anaconda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/) or [Miniconda](https://docs.conda.io/en/latest/miniconda.html).
+- It is strongly recommended to install OmniLearner in its own environment using [Anaconda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/) or [Miniconda](https://docs.conda.io/en/latest/miniconda.html).
 
-  1. Redirect to the folder of choice and clone the repository: `git clone https://github.com/MannLabs/OmicLearn`
-  2. Create a new environment for OmicLearn: `conda create --name omic_learn python=3.9`
-  3. Activate the environment with  `conda activate omic_learn`
-  4. Change to the OmicLearn directory with `cd OmicLearn` and install OmicLearn with `pip install .`
+  1. Redirect to the folder of choice and clone the repository: `git clone https://github.com/ChenglongWang/OmniLearner`
+  2. Create a new environment for OmniLearner: `conda create --name omnilearner python=3.9`
+  3. Activate the environment with  `conda activate omnilearner`
+  4. Change to the OmniLearner directory with `cd OmniLearner` and install OmniLearner with `pip install .`
 
-- After a successful installation, type the following command to run OmicLearn:
+- After a successful installation, type the following command to run OmniLearner:
 
-  `python -m omiclearn`
+  `python -m OmniLearner`
 
- - After starting the streamlit server, the OmicLearn page should be automatically opened in your browser (Default link: [`http://localhost:8501`](http://localhost:8501)
+ - After starting the streamlit server, the OmniLearner page should be automatically opened in your browser (Default link: [`http://localhost:8501`](http://localhost:8501)
 
 
-## Getting Started with OmicLearn
+## Getting Started with OmniLearner
 
-The following image displays the main steps of OmicLearn:
+The following image displays the main steps of OmniLearner:
 
-![OmicLearn Workflow](workflow.png)
+![OmniLearner Workflow](workflow.png)
 
-Detailed instructions on how to get started with OmicLearn can be found **[here.](https://omiclearn.readthedocs.io/en/latest/USING.html)**
+Detailed instructions on how to get started with OmniLearner can be found **[here.](https://OmniLearner.readthedocs.io/en/latest/USING.html)**
 
 On this page, you can click on the titles listed in the *Table of Contents*, which contain instructions for each section.
 
 ## Contributing
 All contributions are welcome. 👍
 
-📰 To get started, please check out our **[`CONTRIBUTING`](https://github.com/MannLabs/OmicLearn/blob/master/CONTRIBUTING.md)** guidelines.
+📰 To get started, please check out our **[`CONTRIBUTING`](https://github.com/MannLabs/OmniLearner/blob/master/CONTRIBUTING.md)** guidelines.
 
-When contributing to **OmicLearn**, please **[open a new issue](https://github.com/MannLabs/OmicLearn/issues/new/choose)** to report the bug or discuss the changes you plan before sending a PR (pull request).
+When contributing to **OmniLearner**, please **[open a new issue](https://github.com/MannLabs/OmniLearner/issues/new/choose)** to report the bug or discuss the changes you plan before sending a PR (pull request).
 
 We appreciate community contributions to the repository.
