@@ -5,7 +5,7 @@ import sklearn
 import numpy as np
 import pandas as pd
 import streamlit as st
-
+from omnilearner.utils.statement import DISCLAIMER_WARNING, DISCLAIMER_NOTE, DISCLAIMER_CITATION, UPLOAD_STATEMENT, ALZHEIMER_STATEMENT
 # Checkpoint for XGBoost
 xgboost_installed = False
 try:
@@ -395,23 +395,9 @@ def main_text_and_data_upload(state, APP_TITLE):
 
     with st.expander("Disclaimer", expanded=False):
 
-        st.markdown(
-            """
-        **⚠️ Warning:** It is possible to get artificially high or low performance because of technical and biological artifacts in the data.
-        While OmniLearner has the functionality to perform basic exploratory data analysis (EDA) such as PCA, it is not meant to substitute throughout data exploration but rather add a machine learning layer.
-        Please check our [recommendations](https://omnilearner.readthedocs.io/en/latest/recommendations.html) - page for potential pitfalls and interpret performance metrics accordingly.
-        """
-        )
-
-        st.markdown(
-            """**Note:** By uploading a file, you agree to our
-                    [Apache License](https://github.com/MannLabs/OmicLearn/blob/master/LICENSE.txt).
-                    Uploaded data will not be saved."""
-        )
-
-        citation = "**Reference:** Transparent exploration of machine learning for biomarker discovery from proteomics and omics data\nFurkan M. Torun, Sebastian Virreira Winter, Sophia Doll, Felix M. Riese, Artem Vorobyev, Johannes B. Mueller-Reif, Philipp E. Geyer, Maximilian T. Strauss\nbioRxiv 2021.03.05.434053; doi: https://doi.org/10.1101/2021.03.05.434053"
-
-        st.markdown(citation)
+        st.markdown(DISCLAIMER_WARNING)
+        st.markdown(DISCLAIMER_NOTE)
+        st.markdown(DISCLAIMER_CITATION)
 
 
     with st.expander("Upload or select sample dataset (*Required)", expanded=True):
@@ -420,7 +406,7 @@ def main_text_and_data_upload(state, APP_TITLE):
             "", type=["csv", "xlsx", "xls", "tsv"]
         )
 
-        st.markdown("Maximum size 200 MB. One row per sample, one column per feature. 'Features' (Proteins, Genes, ..) should be uppercase, all additional features with a leading '_'.")
+        st.markdown(UPLOAD_STATEMENT)
 
         if file_buffer is not None:
             if file_buffer.name.endswith(".xlsx") or file_buffer.name.endswith(".xls"):
@@ -456,15 +442,7 @@ def main_text_and_data_upload(state, APP_TITLE):
             state["df"] = pd.DataFrame()
         elif state.sample_file != "None":
             if state.sample_file == "Alzheimer":
-                st.info(
-                    """
-                    **This dataset was retrieved from the following paper and the code for parsing is available at
-                    [GitHub](https://github.com/MannLabs/OmicLearn/blob/master/data/Alzheimer_paper.ipynb):**\n
-                    Bader, J., Geyer, P., Müller, J., Strauss, M., Koch, M., & Leypoldt, F. et al. (2020).
-                    Proteome profiling in cerebrospinal fluid reveals novel biomarkers of Alzheimer's disease.
-                    Molecular Systems Biology, 16(6). doi: [10.15252/msb.20199356](http://doi.org/10.15252/msb.20199356)
-                    """
-                )
+                st.info(ALZHEIMER_STATEMENT)
 
             folder_to_load = os.path.join(_parent_directory, 'data')
             file_to_load = os.path.join(folder_to_load, state.sample_file + ".xlsx")
@@ -556,7 +534,7 @@ def generate_text(state, report):
     text = ""
     # Packages
     packages_plain_text = """
-        OmicLearn ({omnilearner_version}) was utilized for performing data analysis, model execution, and creation of plots and charts.
+        OmniLearner ({omnilearner_version}) was utilized for performing data analysis, model execution, and creation of plots and charts.
         Machine learning was done in Python ({python_version}). Feature tables were imported via the Pandas package ({pandas_version}) and manipulated using the Numpy package ({numpy_version}).
         The machine learning pipeline was employed using the scikit-learn package ({sklearn_version}).
         The Plotly ({plotly_version}) library was used for plotting.
