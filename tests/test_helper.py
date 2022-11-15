@@ -1,4 +1,4 @@
-"""Tests for OmicLearn utils."""
+"""Tests for OmniLearner utils."""
 import sys
 from io import BytesIO
 

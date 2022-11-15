@@ -89,7 +89,7 @@ def generate_sidebar_elements(state, icon, report, record_widgets):
 
     # Sidebar -- Image/Title
     st.sidebar.image(
-        icon, use_column_width=True, caption="OmicLearn " + report["omnilearner_version"]
+        icon, use_column_width=True, caption="OmniLearner " + report["omnilearner_version"]
     )
     st.sidebar.markdown(
         "# [Options](https://omnilearner.readthedocs.io/en/latest//METHODS)"
@@ -398,7 +398,7 @@ def main_text_and_data_upload(state, APP_TITLE):
         st.markdown(
             """
         **⚠️ Warning:** It is possible to get artificially high or low performance because of technical and biological artifacts in the data.
-        While OmicLearn has the functionality to perform basic exploratory data analysis (EDA) such as PCA, it is not meant to substitute throughout data exploration but rather add a machine learning layer.
+        While OmniLearner has the functionality to perform basic exploratory data analysis (EDA) such as PCA, it is not meant to substitute throughout data exploration but rather add a machine learning layer.
         Please check our [recommendations](https://omnilearner.readthedocs.io/en/latest/recommendations.html) - page for potential pitfalls and interpret performance metrics accordingly.
         """
         )

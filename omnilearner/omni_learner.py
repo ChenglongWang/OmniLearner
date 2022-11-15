@@ -1,4 +1,4 @@
-"""OmicLearn main file."""
+"""OmniLearner main file."""
 import warnings
 import pandas as pd
 from PIL import Image
@@ -49,11 +49,11 @@ _this_directory = os.path.dirname(_this_file)
 APP_TITLE = "OmniLearner — ML platform for structual datasets"
 st.set_page_config(
     page_title=APP_TITLE,
-    page_icon=Image.open(os.path.join(_this_directory,"utils/omic_learn.ico")),
+    page_icon=Image.open(os.path.join(_this_directory,"utils/omni_logo.ico")),
     layout="centered",
     initial_sidebar_state="auto",
 )
-icon = Image.open(os.path.join(_this_directory, "utils/omic_learn_black.png"))
+icon = Image.open(os.path.join(_this_directory, "utils/omnilearner_logo.png"))
 report = get_system_report()
 
 # This needs to be here as it needs to be after setting ithe initial_sidebar_state
@@ -449,7 +449,7 @@ def classify_and_plot(state):
 
 
 # Main Function
-def OmicLearn_Main():
+def OmniLearner_Main():
 
     # Define state
     state = objdict()
@@ -499,7 +499,7 @@ def OmicLearn_Main():
             - Using the following features: **Class 0 `{state.class_0}`, Class 1 `{state.class_1}`**.
             - Using classifier **`{state.classifier}`**.
             - Using a total of  **`{len(state.features)}`** features.
-            - ⚠️ Warning: OmicLearn is intended to be an exploratory tool to assess the performance of algorithms,
+            - ⚠️ Warning: OmniLearner is intended to be an exploratory tool to assess the performance of algorithms,
                 rather than providing a classification model for production. Please check our [recommendations](https://omnilearner.readthedocs.io/en/latest/recommendations.html) - page for potential pitfalls and interpret performance metrics accordingly.
         """
         )
@@ -528,11 +528,11 @@ def OmicLearn_Main():
         pass
 
 
-# Run the OmicLearn
+# Run the OmniLearner
 if __name__ == "__main__":
 
     try:
-        OmicLearn_Main()
+        OmniLearner_Main()
     except (ValueError, IndexError) as val_ind_error:
         st.error(
             f"There is a problem with values/parameters or dataset due to {val_ind_error}."

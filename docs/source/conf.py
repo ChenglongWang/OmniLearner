@@ -17,7 +17,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'OmicLearn'
+project = 'OmniLearner'
 copyright = '2022, Furkan Torun, Maximilian Strauss'
 author = 'Furkan Torun, Maximilian Strauss'
 
