@@ -13,7 +13,11 @@ DISCLAIMER_NOTE = """
 """
 
 
-DISCLAIMER_CITATION = "**Reference:** Transparent exploration of machine learning for biomarker discovery from proteomics and omics data\nFurkan M. Torun, Sebastian Virreira Winter, Sophia Doll, Felix M. Riese, Artem Vorobyev, Johannes B. Mueller-Reif, Philipp E. Geyer, Maximilian T. Strauss\nbioRxiv 2021.03.05.434053; doi: https://doi.org/10.1101/2021.03.05.434053"
+DISCLAIMER_CITATION = """
+    OmniLearner is developed heavily based on [OmicLearn](https://github.com/MannLabs/OmicLearn). Please cite:
+
+    **Reference:** Transparent exploration of machine learning for biomarker discovery from proteomics and omics data. Furkan M. Torun, Sebastian Virreira Winter, Sophia Doll Felix M. Riese, Artem Vorobyev, Johannes B. Mueller-Reif, Philipp E. Geyer, Maximilian T. Strauss. bioRxiv 2021.03.05.434053; doi: https://doi.org/10.1101/2021.03.05.434053
+"""
 
 
 UPLOAD_STATEMENT = "Maximum size 200 MB. One row per sample, one column per feature. 'Features' (Proteins, Genes, ..) should be uppercase, all additional features with a leading '_'."
