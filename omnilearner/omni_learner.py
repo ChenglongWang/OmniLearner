@@ -66,7 +66,7 @@ except ModuleNotFoundError:
 # Choosing sample dataset and data parameter selections
 def checkpoint_for_data_upload(state, record_widgets):
     multiselect = record_widgets.multiselect
-    number_input = record_widgets.number_input_
+
     state["n_missing"] = state.df.isnull().sum().sum()
 
     if len(state.df) > 0:
@@ -135,7 +135,8 @@ def checkpoint_for_data_upload(state, record_widgets):
             state["class_0"] = multiselect("Select Class 0:", candidates, default=None)
             candidates = [_ for _ in candidates if _ not in state['class_0']]
             state["class_1"] = multiselect("Select Class 1:", candidates, default=None)
-            for i_class in range(state["num_classes"] - 2):
+
+            for i_class in range(int(state["num_classes"] - 2)):
                 candidates = [_ for _ in candidates if _ not in state[f'class_{i_class+1}']]
                 state[f"class_{i_class+2}"] = multiselect(f"Select Class {i_class+2}:", candidates, default=None)
             state["remainder"] = [_ for _ in state.not_features if _ != state.target_column]
@@ -401,6 +402,7 @@ def OmniLearner_Main():
     state["df"] = pd.DataFrame()
     state["class_0"] = None
     state["class_1"] = None
+    state["num_classes"] = 2
 
     # Main components
     widget_values, record_widgets = main_components()
