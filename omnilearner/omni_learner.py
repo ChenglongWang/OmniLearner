@@ -414,7 +414,8 @@ def OmniLearner_Main():
     state = checkpoint_for_data_upload(state, record_widgets)
 
     # Sidebar widgets
-    state = generate_sidebar_elements(state, icon, report, record_widgets)
+    logo_placeholder = st.sidebar.empty()
+    state = generate_sidebar_elements(state, icon, report, record_widgets, logo_placeholder)
 
     # Analysis Part
     if len(state.df) > 0 and state.target_column == "":
@@ -424,7 +425,7 @@ def OmniLearner_Main():
         st.warning(f"**WARNING:** Define classes for the classification target. Got {state.class_0} and {state.class_1}")
 
     elif (state.df is not None) and (state.class_0 and state.class_1) and (st.button("Run analysis", key="run")):
-        state.features = state.features + state.additional_features
+        state.combined_features = state.features + state.additional_features
         subset = state.df_sub[
             state.df_sub[state.target_column].isin(state.class_0)
             | state.df_sub[state.target_column].isin(state.class_1)
@@ -441,7 +442,7 @@ def OmniLearner_Main():
             **Running info:**
             - Using the following features: **Class 0 `{state.class_0}`, Class 1 `{state.class_1}`**.
             - Using classifier **`{state.classifier}`**.
-            - Using a total of  **`{len(state.features)}`** features.
+            - Using a total of  **`{len(state.combined_features)}`** features.
             - ⚠️ Warning: OmniLearner is intended to be an exploratory tool to assess the performance of algorithms,
                 rather than providing a classification model for production. Please check our [recommendations](https://omnilearner.readthedocs.io/en/latest/recommendations.html) - page for potential pitfalls and interpret performance metrics accordingly.
         """
@@ -449,6 +450,12 @@ def OmniLearner_Main():
 
         # Plotting and Get the results
         state = classify_and_plot(state)
+
+        # Update logo
+        finished_icon = Image.open(os.path.join(_this_directory, "utils/omnilearner_logo2.png"))
+        logo_placeholder.image(
+            finished_icon, use_column_width=True, caption="OmniLearner " + report["omnilearner_version"]
+        )
 
         # Generate summary text
         generate_summary(state, report)
@@ -479,5 +486,6 @@ if __name__ == "__main__":
     except (ValueError, IndexError) as val_ind_error:
         st.error(f"There is a problem with values/parameters or dataset due to {val_ind_error}.")
     except TypeError as e:
-        # st.warning("TypeError exists in {}".format(e))
-        pass
+        st.warning("TypeError exists in {}".format(e))
+    except Exception as e:
+        print("Error occured:", e)

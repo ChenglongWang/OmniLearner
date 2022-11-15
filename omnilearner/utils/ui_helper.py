@@ -82,15 +82,20 @@ def main_components():
 
 
 # Generate sidebar elements
-def generate_sidebar_elements(state, icon, report, record_widgets):
+def generate_sidebar_elements(state, icon, report, record_widgets, logo_placeholder = None):
     slider_ = record_widgets.slider_
     selectbox_ = record_widgets.selectbox_
     number_input_ = record_widgets.number_input_
 
     # Sidebar -- Image/Title
-    st.sidebar.image(
-        icon, use_column_width=True, caption="OmniLearner " + report["omnilearner_version"]
-    )
+    if logo_placeholder:
+        logo_placeholder.image(
+            icon, use_column_width=True, caption="OmniLearner " + report["omnilearner_version"]
+        )
+    else:
+        st.sidebar.image(
+            icon, use_column_width=True, caption="OmniLearner " + report["omnilearner_version"]
+        )
     st.sidebar.markdown(
         "# [Options](https://omnilearner.readthedocs.io/en/latest//METHODS)"
     )
