@@ -5,7 +5,7 @@ import setuptools
 import re
 import os
 # local
-import omiclearn as package2install
+import omnilearner as package2install
 
 
 def get_long_description():

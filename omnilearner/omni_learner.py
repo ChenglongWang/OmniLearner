@@ -8,7 +8,7 @@ import os
 
 warnings.simplefilter("ignore")
 
-import omiclearn.utils
+import omnilearner.utils
 
 # Session State
 
@@ -16,10 +16,10 @@ if 'history' not in st.session_state:
     st.session_state.history = []
 
 # ML functionalities
-from omiclearn.utils.ml_helper import perform_cross_validation, transform_dataset, calculate_cm
+from omnilearner.utils.ml_helper import perform_cross_validation, transform_dataset, calculate_cm
 
 # Plotting
-from omiclearn.utils.plot_helper import (
+from omnilearner.utils.plot_helper import (
     plot_confusion_matrices,
     plot_feature_importance,
     plot_pr_curve_cv,
@@ -28,7 +28,7 @@ from omiclearn.utils.plot_helper import (
 )
 
 # UI components and others func.
-from omiclearn.utils.ui_helper import (
+from omnilearner.utils.ui_helper import (
     main_components,
     get_system_report,
     save_sessions,
@@ -158,7 +158,7 @@ def checkpoint_for_data_upload(state, record_widgets):
                     """
                     Use exploratory data anlysis on your dateset to identify potential correlations and biases.
                     For more information, please visit
-                    [the dedicated ReadTheDocs page](https://omiclearn.readthedocs.io/en/latest/METHODS.html#exploratory-data-analysis-eda).
+                    [the dedicated ReadTheDocs page](https://omnilearner.readthedocs.io/en/latest/METHODS.html#exploratory-data-analysis-eda).
                     """
                 )
                 state["df_sub_y"] = state.df_sub[state.target_column].isin(
@@ -237,7 +237,7 @@ def checkpoint_for_data_upload(state, record_widgets):
                 st.markdown(
                     "Manually select a subset of features. If only these features should be used, additionally set the "
                     "`Feature selection` method to `None`. Otherwise, feature selection will be applied, and only a subset of the manually selected features is used."
-                    " Be aware of potential overfitting when manually selecting features and check [recommendations](https://omiclearn.readthedocs.io/en/latest/recommendations.html) - page for potential pitfalls."
+                    " Be aware of potential overfitting when manually selecting features and check [recommendations](https://omnilearner.readthedocs.io/en/latest/recommendations.html) - page for potential pitfalls."
                 )
                 manual_users_features = multiselect(
                     "Select your features manually:", state.proteins, default=None
@@ -500,7 +500,7 @@ def OmicLearn_Main():
             - Using classifier **`{state.classifier}`**.
             - Using a total of  **`{len(state.features)}`** features.
             - ⚠️ Warning: OmicLearn is intended to be an exploratory tool to assess the performance of algorithms,
-                rather than providing a classification model for production. Please check our [recommendations](https://omiclearn.readthedocs.io/en/latest/recommendations.html) - page for potential pitfalls and interpret performance metrics accordingly.
+                rather than providing a classification model for production. Please check our [recommendations](https://omnilearner.readthedocs.io/en/latest/recommendations.html) - page for potential pitfalls and interpret performance metrics accordingly.
         """
         )
 

@@ -92,7 +92,7 @@ def generate_sidebar_elements(state, icon, report, record_widgets):
         icon, use_column_width=True, caption="OmicLearn " + report["omnilearner_version"]
     )
     st.sidebar.markdown(
-        "# [Options](https://omiclearn.readthedocs.io/en/latest//METHODS)"
+        "# [Options](https://omnilearner.readthedocs.io/en/latest//METHODS)"
     )
 
     # Sidebar -- Random State
@@ -102,7 +102,7 @@ def generate_sidebar_elements(state, icon, report, record_widgets):
 
     # Sidebar -- Preprocessing
     st.sidebar.markdown(
-        "## [Preprocessing](https://omiclearn.readthedocs.io/en/latest/METHODS.html#preprocessing)"
+        "## [Preprocessing](https://omnilearner.readthedocs.io/en/latest/METHODS.html#preprocessing)"
     )
     normalizations = [
         "None",
@@ -130,7 +130,7 @@ def generate_sidebar_elements(state, icon, report, record_widgets):
         ).lower()
     if state.n_missing > 0:
         st.sidebar.markdown(
-            "## [Missing value imputation](https://omiclearn.readthedocs.io/en/latest/METHODS.html#imputation-of-missing-values)"
+            "## [Missing value imputation](https://omnilearner.readthedocs.io/en/latest/METHODS.html#imputation-of-missing-values)"
         )
         missing_values = ["Zero", "Mean", "Median", "KNNImputer", "None"]
         state["missing_value"] = selectbox_("Missing value imputation", missing_values)
@@ -141,7 +141,7 @@ def generate_sidebar_elements(state, icon, report, record_widgets):
 
     # Sidebar -- Feature Selection
     st.sidebar.markdown(
-        "## [Feature selection](https://omiclearn.readthedocs.io/en/latest/METHODS.html#feature-selection)"
+        "## [Feature selection](https://omnilearner.readthedocs.io/en/latest/METHODS.html#feature-selection)"
     )
     feature_methods = [
         "ExtraTrees",
@@ -169,7 +169,7 @@ def generate_sidebar_elements(state, icon, report, record_widgets):
 
     # Sidebar -- Classification method selection
     st.sidebar.markdown(
-        "## [Classification](https://omiclearn.readthedocs.io/en/latest/METHODS.html#classification)"
+        "## [Classification](https://omnilearner.readthedocs.io/en/latest/METHODS.html#classification)"
     )
     classifiers = [
         "AdaBoost",
@@ -284,7 +284,7 @@ def generate_sidebar_elements(state, icon, report, record_widgets):
 
     # Sidebar -- Cross-Validation
     st.sidebar.markdown(
-        "## [Cross-validation](https://omiclearn.readthedocs.io/en/latest/METHODS.html#validation)"
+        "## [Cross-validation](https://omnilearner.readthedocs.io/en/latest/METHODS.html#validation)"
     )
     state["cv_method"] = selectbox_(
         "Specify CV method:",
@@ -399,7 +399,7 @@ def main_text_and_data_upload(state, APP_TITLE):
             """
         **⚠️ Warning:** It is possible to get artificially high or low performance because of technical and biological artifacts in the data.
         While OmicLearn has the functionality to perform basic exploratory data analysis (EDA) such as PCA, it is not meant to substitute throughout data exploration but rather add a machine learning layer.
-        Please check our [recommendations](https://omiclearn.readthedocs.io/en/latest/recommendations.html) - page for potential pitfalls and interpret performance metrics accordingly.
+        Please check our [recommendations](https://omnilearner.readthedocs.io/en/latest/recommendations.html) - page for potential pitfalls and interpret performance metrics accordingly.
         """
         )
 

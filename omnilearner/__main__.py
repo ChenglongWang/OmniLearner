@@ -3,8 +3,8 @@
 
 def main():
 
-    import omiclearn.gui
-    omiclearn.gui.run()
+    import omnilearner.gui
+    omnilearner.gui.run()
 
 
 if __name__ == "__main__":
