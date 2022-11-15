@@ -12,7 +12,7 @@ import omnilearner.utils
 
 # Session State
 
-if 'history' not in st.session_state:
+if "history" not in st.session_state:
     st.session_state.history = []
 
 # ML functionalities
@@ -49,7 +49,7 @@ _this_directory = os.path.dirname(_this_file)
 APP_TITLE = "OmniLearner — ML platform for structual datasets"
 st.set_page_config(
     page_title=APP_TITLE,
-    page_icon=Image.open(os.path.join(_this_directory,"utils/omni_logo.ico")),
+    page_icon=Image.open(os.path.join(_this_directory, "utils/omni_logo.ico")),
     layout="centered",
     initial_sidebar_state="auto",
 )
@@ -60,9 +60,7 @@ report = get_system_report()
 try:
     import xgboost
 except ModuleNotFoundError:
-    st.warning(
-        "**WARNING:** Xgboost not installed. To use xgboost install using `conda install py-xgboost`"
-    )
+    st.warning("**WARNING:** Xgboost not installed. To use xgboost install using `conda install py-xgboost`")
 
 
 # Choosing sample dataset and data parameter selections
@@ -87,20 +85,12 @@ def checkpoint_for_data_upload(state, record_widgets):
                         This section allows you to specify a subset of data based on values within a comma.
                         Hence, you can exclude data that should not be used at all."""
             )
-            state["subset_column"] = st.selectbox(
-                "Select subset column:", ["None"] + state.not_proteins
-            )
+            state["subset_column"] = st.selectbox("Select subset column:", ["None"] + state.not_proteins)
 
             if state.subset_column != "None":
-                subset_options = (
-                    state.df[state.subset_column].value_counts().index.tolist()
-                )
-                subset_class = multiselect(
-                    "Select values to keep:", subset_options, default=subset_options
-                )
-                state["df_sub"] = state.df[
-                    state.df[state.subset_column].isin(subset_class)
-                ].copy()
+                subset_options = state.df[state.subset_column].value_counts().index.tolist()
+                subset_class = multiselect("Select values to keep:", subset_options, default=subset_options)
+                state["df_sub"] = state.df[state.df[state.subset_column].isin(subset_class)].copy()
             elif state.subset_column == "None":
                 state["df_sub"] = state.df.copy()
                 state["subset_column"] = "None"
@@ -116,9 +106,7 @@ def checkpoint_for_data_upload(state, record_widgets):
             state["target_column"] = st.selectbox(
                 "Select target column:",
                 [""] + state.not_proteins,
-                format_func=lambda x: "Select a classification target"
-                if x == ""
-                else x,
+                format_func=lambda x: "Select a classification target" if x == "" else x,
             )
             if state.target_column == "":
                 unique_elements_lst = []
@@ -137,17 +125,13 @@ def checkpoint_for_data_upload(state, record_widgets):
                 It is possible to assign multiple values for each class.
             """
             )
-            state["class_0"] = multiselect(
-                "Select Class 0:", unique_elements_lst, default=None
-            )
+            state["class_0"] = multiselect("Select Class 0:", unique_elements_lst, default=None)
             state["class_1"] = multiselect(
                 "Select Class 1:",
                 [_ for _ in unique_elements_lst if _ not in state.class_0],
                 default=None,
             )
-            state["remainder"] = [
-                _ for _ in state.not_proteins if _ is not state.target_column
-            ]
+            state["remainder"] = [_ for _ in state.not_proteins if _ is not state.target_column]
 
         # Once both classes are defined
         if state.class_0 and state.class_1:
@@ -161,17 +145,11 @@ def checkpoint_for_data_upload(state, record_widgets):
                     [the dedicated ReadTheDocs page](https://omnilearner.readthedocs.io/en/latest/METHODS.html#exploratory-data-analysis-eda).
                     """
                 )
-                state["df_sub_y"] = state.df_sub[state.target_column].isin(
-                    state.class_0
-                )
-                state["eda_method"] = st.selectbox(
-                    "Select an EDA method:", ["None", "PCA", "Hierarchical clustering"]
-                )
+                state["df_sub_y"] = state.df_sub[state.target_column].isin(state.class_0)
+                state["eda_method"] = st.selectbox("Select an EDA method:", ["None", "PCA", "Hierarchical clustering"])
 
                 if (state.eda_method == "PCA") and (len(state.proteins) < 6):
-                    state["pca_show_features"] = st.checkbox(
-                        "Show the feature attributes on the graph", value=False
-                    )
+                    state["pca_show_features"] = st.checkbox("Show the feature attributes on the graph", value=False)
 
                 if state.eda_method == "Hierarchical clustering":
                     state["data_range"] = st.slider(
@@ -183,7 +161,7 @@ def checkpoint_for_data_upload(state, record_widgets):
                         help="In large datasets, it is not possible to visaulize all the features.",
                     )
 
-                if (state.eda_method != "None"):
+                if state.eda_method != "None":
                     with st.spinner(f"Performing {state.eda_method}.."):
                         p = perform_EDA(state)
                         st.plotly_chart(p, use_container_width=True)
@@ -191,9 +169,7 @@ def checkpoint_for_data_upload(state, record_widgets):
                         get_download_link(p, f"{state.eda_method}.svg")
 
             with st.expander("Additional features"):
-                st.markdown(
-                    "Select additional features. All non numerical values will be encoded (e.g. M/F -> 0,1)"
-                )
+                st.markdown("Select additional features. All non numerical values will be encoded (e.g. M/F -> 0,1)")
                 state["additional_features"] = multiselect(
                     "Select additional features for trainig:",
                     state.remainder,
@@ -212,9 +188,7 @@ def checkpoint_for_data_upload(state, record_widgets):
                     "Upload your CSV (comma(,) seperated) file here in which each row corresponds to a feature to be excluded.",
                     type=["csv"],
                 )
-                exclusion_df, exc_df_warnings = load_data(
-                    exclusion_file_buffer, "Comma (,)"
-                )
+                exclusion_df, exc_df_warnings = load_data(exclusion_file_buffer, "Comma (,)")
                 for warning in exc_df_warnings:
                     st.warning(warning)
 
@@ -239,9 +213,7 @@ def checkpoint_for_data_upload(state, record_widgets):
                     "`Feature selection` method to `None`. Otherwise, feature selection will be applied, and only a subset of the manually selected features is used."
                     " Be aware of potential overfitting when manually selecting features and check [recommendations](https://omnilearner.readthedocs.io/en/latest/recommendations.html) - page for potential pitfalls."
                 )
-                manual_users_features = multiselect(
-                    "Select your features manually:", state.proteins, default=None
-                )
+                manual_users_features = multiselect("Select your features manually:", state.proteins, default=None)
             if manual_users_features:
                 state.proteins = manual_users_features
 
@@ -251,9 +223,7 @@ def checkpoint_for_data_upload(state, record_widgets):
             not_proteins_excluded_target_option = state.not_proteins
             if state.target_column != "":
                 not_proteins_excluded_target_option.remove(state.target_column)
-            state["cohort_column"] = st.selectbox(
-                "Select cohort column:", [None] + not_proteins_excluded_target_option
-            )
+            state["cohort_column"] = st.selectbox("Select cohort column:", [None] + not_proteins_excluded_target_option)
             if state["cohort_column"] == None:
                 state["cohort_checkbox"] = None
             else:
@@ -262,9 +232,7 @@ def checkpoint_for_data_upload(state, record_widgets):
             if "exclude_features" not in state:
                 state["exclude_features"] = []
 
-        state["proteins"] = [
-            _ for _ in state.proteins if _ not in state.exclude_features
-        ]
+        state["proteins"] = [_ for _ in state.proteins if _ not in state.exclude_features]
 
     return state
 
@@ -288,20 +256,13 @@ def classify_and_plot(state):
                 f"This is the average feature importance from all {state.cv_splits*state.cv_repeats} cross validation runs."
             )
         else:
-            st.markdown(
-                f"This is the average feature importance from all {state.cv_splits} cross validation runs."
-            )
+            st.markdown(f"This is the average feature importance from all {state.cv_splits} cross validation runs.")
 
         if cv_curves["feature_importances_"] is not None:
 
             # Check whether all feature importance attributes are 0 or not
-            if (
-                pd.DataFrame(cv_curves["feature_importances_"]).isin([0]).all().all()
-                == False
-            ):
-                p, feature_df, feature_df_wo_links = plot_feature_importance(
-                    cv_curves["feature_importances_"]
-                )
+            if pd.DataFrame(cv_curves["feature_importances_"]).isin([0]).all().all() == False:
+                p, feature_df, feature_df_wo_links = plot_feature_importance(cv_curves["feature_importances_"])
                 st.plotly_chart(p, use_container_width=True)
                 if p:
                     get_download_link(p, "clf_feature_importance.pdf")
@@ -318,18 +279,12 @@ def classify_and_plot(state):
                 top_features = feature_df.index.to_list()
 
             else:
-                st.info(
-                    "All feature importance attribute are zero (0). The plot and table are not displayed."
-                )
+                st.info("All feature importance attribute are zero (0). The plot and table are not displayed.")
         else:
-            st.info(
-                "Feature importance attribute is not implemented for this classifier."
-            )
+            st.info("Feature importance attribute is not implemented for this classifier.")
     state["top_features"] = top_features
     # ROC-AUC
-    with st.expander(
-        "Receiver operating characteristic Curve and Precision-Recall Curve"
-    ):
+    with st.expander("Receiver operating characteristic Curve and Precision-Recall Curve"):
         st.subheader("Receiver operating characteristic")
         p = plot_roc_curve_cv(cv_curves["roc_curves_"])
         st.plotly_chart(p, use_container_width=True)
@@ -339,9 +294,7 @@ def classify_and_plot(state):
 
         # Precision-Recall Curve
         st.subheader("Precision-Recall Curve")
-        st.markdown(
-            "Precision-Recall (PR) Curve might be used for imbalanced datasets."
-        )
+        st.markdown("Precision-Recall (PR) Curve might be used for imbalanced datasets.")
         p = plot_pr_curve_cv(cv_curves["pr_curves_"], cv_results["class_ratio_test"])
         st.plotly_chart(p, use_container_width=True)
         if p:
@@ -352,9 +305,7 @@ def classify_and_plot(state):
     with st.expander("Confusion matrix"):
         names = ["CV_split {}".format(_ + 1) for _ in range(len(cv_curves["y_hats_"]))]
         names.insert(0, "Sum of all splits")
-        p = plot_confusion_matrices(
-            state.class_0, state.class_1, cv_curves["y_hats_"], names
-        )
+        p = plot_confusion_matrices(state.class_0, state.class_1, cv_curves["y_hats_"], names)
         st.plotly_chart(p, use_container_width=True)
         if p:
             get_download_link(p, "cm.pdf")
@@ -388,18 +339,12 @@ def classify_and_plot(state):
 
     if state.cohort_checkbox:
         st.header("Cohort comparison results")
-        cohort_results, cohort_curves = perform_cross_validation(
-            state, state.cohort_column
-        )
+        cohort_results, cohort_curves = perform_cross_validation(state, state.cohort_column)
 
-        with st.expander(
-            "Receiver operating characteristic Curve and Precision-Recall Curve"
-        ):
+        with st.expander("Receiver operating characteristic Curve and Precision-Recall Curve"):
             # ROC-AUC for Cohorts
             st.subheader("Receiver operating characteristic")
-            p = plot_roc_curve_cv(
-                cohort_curves["roc_curves_"], cohort_curves["cohort_combos"]
-            )
+            p = plot_roc_curve_cv(cohort_curves["roc_curves_"], cohort_curves["cohort_combos"])
             st.plotly_chart(p, use_container_width=True)
             if p:
                 get_download_link(p, "roc_curve_cohort.pdf")
@@ -407,9 +352,7 @@ def classify_and_plot(state):
 
             # PR Curve for Cohorts
             st.subheader("Precision-Recall Curve")
-            st.markdown(
-                "Precision-Recall (PR) Curve might be used for imbalanced datasets."
-            )
+            st.markdown("Precision-Recall (PR) Curve might be used for imbalanced datasets.")
             p = plot_pr_curve_cv(
                 cohort_curves["pr_curves_"],
                 cohort_results["class_ratio_test"],
@@ -423,15 +366,10 @@ def classify_and_plot(state):
         # Confusion Matrix (CM) for Cohorts
         with st.expander("Confusion matrix"):
             st.subheader("Confusion matrix")
-            names = [
-                "Train on {}, Test on {}".format(_[0], _[1])
-                for _ in cohort_curves["cohort_combos"]
-            ]
+            names = ["Train on {}, Test on {}".format(_[0], _[1]) for _ in cohort_curves["cohort_combos"]]
             names.insert(0, "Sum of cohort comparisons")
 
-            p = plot_confusion_matrices(
-                state.class_0, state.class_1, cohort_curves["y_hats_"], names
-            )
+            p = plot_confusion_matrices(state.class_0, state.class_1, cohort_curves["y_hats_"], names)
             st.plotly_chart(p, use_container_width=True)
             if p:
                 get_download_link(p, "cm_cohorts.pdf")
@@ -476,11 +414,7 @@ def OmniLearner_Main():
     elif len(state.df) > 0 and not (state.class_0 and state.class_1):
         st.warning("**WARNING:** Define classes for the classification target.")
 
-    elif (
-        (state.df is not None)
-        and (state.class_0 and state.class_1)
-        and (st.button("Run analysis", key="run"))
-    ):
+    elif (state.df is not None) and (state.class_0 and state.class_1) and (st.button("Run analysis", key="run")):
         state.features = state.proteins + state.additional_features
         subset = state.df_sub[
             state.df_sub[state.target_column].isin(state.class_0)
@@ -534,9 +468,7 @@ if __name__ == "__main__":
     try:
         OmniLearner_Main()
     except (ValueError, IndexError) as val_ind_error:
-        st.error(
-            f"There is a problem with values/parameters or dataset due to {val_ind_error}."
-        )
+        st.error(f"There is a problem with values/parameters or dataset due to {val_ind_error}.")
     except TypeError as e:
         # st.warning("TypeError exists in {}".format(e))
         pass
