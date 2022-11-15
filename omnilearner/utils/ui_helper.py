@@ -529,7 +529,7 @@ def get_download_link(exported_object, name):
 
 
 # Generate summary text
-def generate_text(state, report):
+def generate_summary(state, report):
 
     text = ""
     # Packages

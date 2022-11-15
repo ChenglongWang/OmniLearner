@@ -37,7 +37,7 @@ from omnilearner.utils.ui_helper import (
     objdict,
     generate_sidebar_elements,
     get_download_link,
-    generate_text,
+    generate_summary,
     generate_footer_parts,
     session_history,
 )
@@ -442,7 +442,7 @@ def OmniLearner_Main():
         state = classify_and_plot(state)
 
         # Generate summary text
-        generate_text(state, report)
+        generate_summary(state, report)
 
         # Session and Run info
         widget_values["Date"] = datetime.now().strftime("%d/%m/%Y %H:%M:%S") + " (UTC)"
