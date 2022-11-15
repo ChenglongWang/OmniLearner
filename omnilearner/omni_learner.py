@@ -4,7 +4,7 @@ import pandas as pd
 from PIL import Image
 import streamlit as st
 from datetime import datetime
-import os
+from pathlib import Path
 
 warnings.simplefilter("ignore")
 
@@ -42,18 +42,18 @@ from omnilearner.utils.ui_helper import (
     session_history,
 )
 
-_this_file = os.path.abspath(__file__)
-_this_directory = os.path.dirname(_this_file)
+_this_directory = Path(__file__).resolve().parent
 
 # Set the configs
 APP_TITLE = "OmniLearner — ML platform for structual datasets"
 st.set_page_config(
     page_title=APP_TITLE,
-    page_icon=Image.open(os.path.join(_this_directory, "utils/omni_logo.ico")),
+    page_icon=Image.open(_this_directory / "utils" / "omni_logo.ico"),
     layout="centered",
     initial_sidebar_state="auto",
 )
-icon = Image.open(os.path.join(_this_directory, "utils/omnilearner_logo.png"))
+icon = Image.open(_this_directory / "utils" / "omnilearner_logo.png")
+icon2 = Image.open(_this_directory / "utils" / "omnilearner_logo2.png")
 report = get_system_report()
 
 # This needs to be here as it needs to be after setting ithe initial_sidebar_state
@@ -452,9 +452,8 @@ def OmniLearner_Main():
         state = classify_and_plot(state)
 
         # Update logo
-        finished_icon = Image.open(os.path.join(_this_directory, "utils/omnilearner_logo2.png"))
         logo_placeholder.image(
-            finished_icon, use_column_width=True, caption="OmniLearner " + report["omnilearner_version"]
+            icon2, use_column_width=True, caption="OmniLearner " + report["omnilearner_version"]
         )
 
         # Generate summary text

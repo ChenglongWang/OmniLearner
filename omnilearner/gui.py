@@ -1,30 +1,25 @@
-import os
 import sys
+from pathlib import Path
 from streamlit import cli as stcli
 
 def run():
-    _this_file = os.path.abspath(__file__)
-    _this_directory = os.path.dirname(_this_file)
-
-    file_path = os.path.join(_this_directory, 'omni_learner.py')
-
-    HOME = os.path.expanduser("~")
-    ST_PATH = os.path.join(HOME, ".streamlit")
+    file_path = Path(__file__).resolve().parent / 'omni_learner.py'
+    ST_PATH = Path.home() / ".streamlit"
 
     for folder in [ST_PATH]:
-        if not os.path.isdir(folder):
-            os.mkdir(folder)
+        if not folder.is_dir():
+            folder.mkdir()
 
     #Check if streamlit credentials exists
-    ST_CREDENTIALS = os.path.join(ST_PATH, 'credentials.toml')
-    if not os.path.isfile(ST_CREDENTIALS):
-        with open(ST_CREDENTIALS, 'w') as file:
+    ST_CREDENTIALS = ST_PATH / 'credentials.toml'
+    if not ST_CREDENTIALS.is_file():
+        with ST_CREDENTIALS.open('w') as file:
             file.write("[general]\n")
             file.write('\nemail = ""')
 
     print(f'Starting Omnilearner from {file_path}')
 
-    args = ["streamlit", "run", file_path, "--global.developmentMode=false", "--browser.gatherUsageStats=False"]
+    args = ["streamlit", "run", str(file_path), "--global.developmentMode=false", "--browser.gatherUsageStats=False"]
 
     sys.argv = args
 
