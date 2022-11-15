@@ -433,7 +433,7 @@ def main_text_and_data_upload(state, APP_TITLE):
         st.markdown("<hr>", unsafe_allow_html=True)
 
         state["sample_file"] = st.selectbox(
-            "Or select sample file here:", ["None", "Alzheimer", "Sample"]
+            "Or select sample file here:", ["None", "Alzheimer", "Sample", "Sample_3cls"]
         )
 
         # Sample dataset / uploaded file selection

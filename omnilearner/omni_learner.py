@@ -437,10 +437,11 @@ def OmniLearner_Main():
             state["X_cohort"] = subset[state.cohort_column]
 
         # Show the running info text
+        class_info = ",".join([f"Class {i} `{state[f'class_{i}']}`" for i in range(state.num_classes)])
         st.info(
             f"""
             **Running info:**
-            - Using the following features: **Class 0 `{state.class_0}`, Class 1 `{state.class_1}`**.
+            - Using the following features: **{class_info}**.
             - Using classifier **`{state.classifier}`**.
             - Using a total of  **`{len(state.combined_features)}`** features.
             - ⚠️ Warning: OmniLearner is intended to be an exploratory tool to assess the performance of algorithms,
@@ -487,4 +488,4 @@ if __name__ == "__main__":
     except TypeError as e:
         st.warning("TypeError exists in {}".format(e))
     except Exception as e:
-        print("Error occured:", e)
+        st.error("Error occured:", e)
