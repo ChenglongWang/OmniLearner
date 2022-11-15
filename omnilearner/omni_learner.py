@@ -66,6 +66,7 @@ except ModuleNotFoundError:
 # Choosing sample dataset and data parameter selections
 def checkpoint_for_data_upload(state, record_widgets):
     multiselect = record_widgets.multiselect
+    number_input = record_widgets.number_input_
     state["n_missing"] = state.df.isnull().sum().sum()
 
     if len(state.df) > 0:
@@ -125,12 +126,17 @@ def checkpoint_for_data_upload(state, record_widgets):
                 It is possible to assign multiple values for each class.
             """
             )
-            state["class_0"] = multiselect("Select Class 0:", unique_elements_lst, default=None)
-            state["class_1"] = multiselect(
-                "Select Class 1:",
-                [_ for _ in unique_elements_lst if _ not in state.class_0],
-                default=None,
+            state["num_classes"] = st.number_input(
+                "Number of classes:", value=2, min_value=2, max_value=20
             )
+
+            candidates = unique_elements_lst.copy()
+            state["class_0"] = multiselect("Select Class 0:", candidates, default=None)
+            candidates = [_ for _ in candidates if _ not in state['class_0']]
+            state["class_1"] = multiselect("Select Class 1:", candidates, default=None)
+            for i_class in range(state["num_classes"] - 2):
+                candidates = [_ for _ in candidates if _ not in state[f'class_{i_class+1}']]
+                state[f"class_{i_class+2}"] = multiselect(f"Select Class {i_class+2}:", candidates, default=None) 
             state["remainder"] = [_ for _ in state.not_proteins if _ is not state.target_column]
 
         # Once both classes are defined
@@ -412,7 +418,7 @@ def OmniLearner_Main():
         st.warning("**WARNING:** Select classification target from your data.")
 
     elif len(state.df) > 0 and not (state.class_0 and state.class_1):
-        st.warning("**WARNING:** Define classes for the classification target.")
+        st.warning(f"**WARNING:** Define classes for the classification target. Got {state.class_0} and {state.class_1}")
 
     elif (state.df is not None) and (state.class_0 and state.class_1) and (st.button("Run analysis", key="run")):
         state.features = state.proteins + state.additional_features
