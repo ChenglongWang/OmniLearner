@@ -32,7 +32,7 @@ scorer_dict = {key: getattr(metrics, metric) for key, metric in scorer_dict.item
 
 
 @st.cache(persist=True)
-def transform_dataset(subset, additional_features, proteins):
+def transform_dataset(subset, additional_features, features):
     """
     Transforms data with label encoder
     """
@@ -55,7 +55,7 @@ def transform_dataset(subset, additional_features, proteins):
         transformed = []
 
     # Join with proteins
-    protein_features = subset[proteins].astype("float")
+    protein_features = subset[features].astype("float")
 
     if len(transformed) >= 1 and len(protein_features) >= 1:
         X = pd.concat([protein_features, transformed], axis=1)

@@ -76,17 +76,18 @@ def checkpoint_for_data_upload(state, record_widgets):
                 "Use missing value imputation or `xgboost` classifier."
             )
         # Distinguish the features from others
-        state["proteins"] = [_ for _ in state.df.columns.to_list() if _[0] != "_"]
-        state["not_proteins"] = [_ for _ in state.df.columns.to_list() if _[0] == "_"]
+        state["features"] = [_ for _ in state.df.columns.to_list() if _[0] != "_"]
+        state["not_features"] = [_ for _ in state.df.columns.to_list() if _[0] == "_"]
 
         # Dataset -- Subset
         with st.expander("Create subset"):
             st.markdown(
                 """
-                        This section allows you to specify a subset of data based on values within a comma.
-                        Hence, you can exclude data that should not be used at all."""
+                    This section allows you to specify a subset of data based on values within a comma.
+                    Hence, you can exclude data that should not be used at all.
+                """
             )
-            state["subset_column"] = st.selectbox("Select subset column:", ["None"] + state.not_proteins)
+            state["subset_column"] = st.selectbox("Select subset column:", ["None"] + state.not_features)
 
             if state.subset_column != "None":
                 subset_options = state.df[state.subset_column].value_counts().index.tolist()
@@ -106,7 +107,7 @@ def checkpoint_for_data_upload(state, record_widgets):
             )
             state["target_column"] = st.selectbox(
                 "Select target column:",
-                [""] + state.not_proteins,
+                [""] + state.not_features,
                 format_func=lambda x: "Select a classification target" if x == "" else x,
             )
             if state.target_column == "":
@@ -136,8 +137,8 @@ def checkpoint_for_data_upload(state, record_widgets):
             state["class_1"] = multiselect("Select Class 1:", candidates, default=None)
             for i_class in range(state["num_classes"] - 2):
                 candidates = [_ for _ in candidates if _ not in state[f'class_{i_class+1}']]
-                state[f"class_{i_class+2}"] = multiselect(f"Select Class {i_class+2}:", candidates, default=None) 
-            state["remainder"] = [_ for _ in state.not_proteins if _ is not state.target_column]
+                state[f"class_{i_class+2}"] = multiselect(f"Select Class {i_class+2}:", candidates, default=None)
+            state["remainder"] = [_ for _ in state.not_features if _ != state.target_column]
 
         # Once both classes are defined
         if state.class_0 and state.class_1:
@@ -154,15 +155,15 @@ def checkpoint_for_data_upload(state, record_widgets):
                 state["df_sub_y"] = state.df_sub[state.target_column].isin(state.class_0)
                 state["eda_method"] = st.selectbox("Select an EDA method:", ["None", "PCA", "Hierarchical clustering"])
 
-                if (state.eda_method == "PCA") and (len(state.proteins) < 6):
+                if (state.eda_method == "PCA") and (len(state.features) < 6):
                     state["pca_show_features"] = st.checkbox("Show the feature attributes on the graph", value=False)
 
                 if state.eda_method == "Hierarchical clustering":
                     state["data_range"] = st.slider(
                         "Data range to be visualized",
                         0,
-                        len(state.proteins),
-                        (0, round(len(state.proteins) / 2)),
+                        len(state.features),
+                        (0, round(len(state.features) / 2)),
                         step=3,
                         help="In large datasets, it is not possible to visaulize all the features.",
                     )
@@ -177,7 +178,7 @@ def checkpoint_for_data_upload(state, record_widgets):
             with st.expander("Additional features"):
                 st.markdown("Select additional features. All non numerical values will be encoded (e.g. M/F -> 0,1)")
                 state["additional_features"] = multiselect(
-                    "Select additional features for trainig:",
+                    "Select additional features for training:",
                     state.remainder,
                     default=None,
                 )
@@ -204,12 +205,12 @@ def checkpoint_for_data_upload(state, record_widgets):
                     exclusion_df_list = list(exclusion_df.iloc[:, 0].unique())
                     state["exclude_features"] = multiselect(
                         "Select features to be excluded:",
-                        state.proteins,
+                        state.features,
                         default=exclusion_df_list,
                     )
                 else:
                     state["exclude_features"] = multiselect(
-                        "Select features to be excluded:", state.proteins, default=[]
+                        "Select features to be excluded:", state.features, default=[]
                     )
 
             # Manual feature selection
@@ -219,17 +220,17 @@ def checkpoint_for_data_upload(state, record_widgets):
                     "`Feature selection` method to `None`. Otherwise, feature selection will be applied, and only a subset of the manually selected features is used."
                     " Be aware of potential overfitting when manually selecting features and check [recommendations](https://omnilearner.readthedocs.io/en/latest/recommendations.html) - page for potential pitfalls."
                 )
-                manual_users_features = multiselect("Select your features manually:", state.proteins, default=None)
+                manual_users_features = multiselect("Select your features manually:", state.features, default=None)
             if manual_users_features:
-                state.proteins = manual_users_features
+                state.features = manual_users_features
 
         # Dataset -- Cohort selections
         with st.expander("Cohort comparison"):
             st.markdown("Select cohort column to train on one and predict on another:")
-            not_proteins_excluded_target_option = state.not_proteins
+            not_features_excluded_target_option = state.not_features
             if state.target_column != "":
-                not_proteins_excluded_target_option.remove(state.target_column)
-            state["cohort_column"] = st.selectbox("Select cohort column:", [None] + not_proteins_excluded_target_option)
+                not_features_excluded_target_option.remove(state.target_column)
+            state["cohort_column"] = st.selectbox("Select cohort column:", [None] + not_features_excluded_target_option)
             if state["cohort_column"] == None:
                 state["cohort_checkbox"] = None
             else:
@@ -238,7 +239,7 @@ def checkpoint_for_data_upload(state, record_widgets):
             if "exclude_features" not in state:
                 state["exclude_features"] = []
 
-        state["proteins"] = [_ for _ in state.proteins if _ not in state.exclude_features]
+        state["features"] = [_ for _ in state.features if _ not in state.exclude_features]
 
     return state
 
@@ -421,13 +422,13 @@ def OmniLearner_Main():
         st.warning(f"**WARNING:** Define classes for the classification target. Got {state.class_0} and {state.class_1}")
 
     elif (state.df is not None) and (state.class_0 and state.class_1) and (st.button("Run analysis", key="run")):
-        state.features = state.proteins + state.additional_features
+        state.features = state.features + state.additional_features
         subset = state.df_sub[
             state.df_sub[state.target_column].isin(state.class_0)
             | state.df_sub[state.target_column].isin(state.class_1)
         ].copy()
         state.y = subset[state.target_column].isin(state.class_0)
-        state.X = transform_dataset(subset, state.additional_features, state.proteins)
+        state.X = transform_dataset(subset, state.additional_features, state.features)
 
         if state.cohort_column is not None:
             state["X_cohort"] = subset[state.cohort_column]

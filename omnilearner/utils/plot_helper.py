@@ -581,7 +581,7 @@ def perform_EDA(state):
     Perform EDA on the dataset by given method and return the chart
     """
 
-    data = state.df_sub[state.proteins].astype("float").fillna(0.0)
+    data = state.df_sub[state.features].astype("float").fillna(0.0)
     if state.eda_method == "Hierarchical clustering":
         data_to_be_correlated = data.iloc[:, state.data_range[0] : state.data_range[1]]
         corr = data_to_be_correlated.corr(method="pearson")
