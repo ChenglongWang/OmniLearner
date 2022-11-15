@@ -7,19 +7,19 @@ from PyInstaller.building.build_main import Analysis, PYZ, EXE, COLLECT, BUNDLE,
 import PyInstaller.utils.hooks
 import pkg_resources
 import importlib.metadata
-import omiclearn
+import omnilearner
 
 
 ##################### User definitions
-exe_name = 'omiclearn_gui'
-script_name = 'omiclearn_pyinstaller.py'
+exe_name = 'omnilearner_gui'
+script_name = 'omnilearner_pyinstaller.py'
 if sys.platform[:6] == "darwin":
-	icon = '../logos/omiclearn_logo.icns'
+	icon = '../logos/omnilearner_logo.icns'
 else:
-	icon = '../logos/omiclearn_logo.ico'
+	icon = '../logos/omnilearner_logo.ico'
 block_cipher = None
 location = os.getcwd()
-project = "omiclearn"
+project = "omnilearner"
 remove_tests = True
 bundle_name = "OmicLearn"
 #####################

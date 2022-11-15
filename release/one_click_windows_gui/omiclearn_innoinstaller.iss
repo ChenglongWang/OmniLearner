@@ -5,12 +5,12 @@
 #define MyAppVersion "1.3"
 #define MyAppPublisher "MannLabs"
 #define MyAppURL "https://github.com/MannLabs/OmicLearn"
-#define MyAppExeName "omiclearn_gui.exe"
+#define MyAppExeName "omnilearner_gui.exe"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
-AppId={{omiclearn}
+AppId={{omnilearner}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 ;AppVerName={#MyAppName} {#MyAppVersion}
@@ -25,8 +25,8 @@ LicenseFile=..\..\LICENSE.txt
 PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=dialog
 OutputDir=dist
-OutputBaseFilename=omiclearn_gui_installer_windows
-SetupIconFile=..\logos\omiclearn_logo.ico
+OutputBaseFilename=omnilearner_gui_installer_windows
+SetupIconFile=..\logos\omnilearner_logo.ico
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
@@ -38,8 +38,8 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "dist\omiclearn_gui\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "dist\omiclearn_gui\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "dist\omnilearner_gui\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "dist\omnilearner_gui\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

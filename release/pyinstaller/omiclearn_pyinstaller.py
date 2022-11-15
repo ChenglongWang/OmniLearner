@@ -1,5 +1,5 @@
 if __name__ == "__main__":
-    import omiclearn.gui
+    import omnilearner.gui
     import multiprocessing
     multiprocessing.freeze_support()
-    omiclearn.gui.run()
+    omnilearner.gui.run()
