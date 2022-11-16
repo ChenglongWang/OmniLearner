@@ -192,12 +192,12 @@ def return_classifier(classifier, classifier_params):
     Returns classifier object based on name
     """
     # Max Features parameter for RandomForest and DecisionTree
-    cp = classifier_params.copy()
+    clf_params = classifier_params.copy()
     if classifier in ["LogisticRegression", "KNeighborsClassifier", "RandomForest"]:
-        cp["n_jobs"] = -1
+        clf_params["n_jobs"] = -1
 
     if classifier == "LinearSVC":
-        cv_generator = cp["cv_generator"]
+        cv_generator = clf_params["cv_generator"]
     else:
         cv_generator = None
 
@@ -208,7 +208,7 @@ def return_classifier(classifier, classifier_params):
     elif classifier == "LogisticRegression":
         clf = linear_model.LogisticRegression()
     elif classifier == "KNeighborsClassifier":
-        del cp["random_state"]
+        del clf_params["random_state"]
         clf = neighbors.KNeighborsClassifier()
     elif classifier == "RandomForest":
         clf = ensemble.RandomForestClassifier()
@@ -217,11 +217,37 @@ def return_classifier(classifier, classifier_params):
     elif classifier == "AdaBoost":
         clf = ensemble.AdaBoostClassifier()
     elif classifier == "LinearSVC":
-        del cp["cv_generator"]
+        del clf_params["cv_generator"]
         clf = svm.LinearSVC()
 
-    clf.set_params(**cp)
+    clf.set_params(**clf_params)
     return clf, cv_generator
+
+
+def initialize_report():
+    cv_results = {}
+    cv_curves = {}
+
+    # Initialize reporting dict with empty lists
+    for _ in ["num_feat", "n_obs", "n_class_0", "n_class_1", "class_ratio"]:
+        for x in ["_train", "_test"]:
+            cv_results[_ + x] = []
+
+    for _ in [
+        "pr_auc",
+        "roc_curves_",
+        "pr_curves_",
+        "y_hats_",
+        "feature_importances_",
+        "features_",
+    ]:
+        cv_curves[_] = []
+
+    for metric_name, metric_fct in scorer_dict.items():
+        cv_results[metric_name] = []
+    cv_results["pr_auc"] = []  # ADD pr_auc manually
+
+    return cv_results, cv_curves
 
 
 def perform_cross_validation(state, cohort_column=None):
@@ -247,27 +273,7 @@ def perform_cross_validation(state, cohort_column=None):
     else:
         raise NotImplementedError("This CV method is not implemented")
 
-    _cv_results = {}
-    _cv_curves = {}
-
-    # Initialize reporting dict with empty lists
-    for _ in ["num_feat", "n_obs", "n_class_0", "n_class_1", "class_ratio"]:
-        for x in ["_train", "_test"]:
-            _cv_results[_ + x] = []
-
-    for _ in [
-        "pr_auc",
-        "roc_curves_",
-        "pr_curves_",
-        "y_hats_",
-        "feature_importances_",
-        "features_",
-    ]:
-        _cv_curves[_] = []
-
-    for metric_name, metric_fct in scorer_dict.items():
-        _cv_results[metric_name] = []
-    _cv_results["pr_auc"] = []  # ADD pr_auc manually
+    _cv_results, _cv_curves = initialize_report()
 
     X = state.X
     y = state.y
@@ -376,10 +382,16 @@ def perform_cross_validation(state, cohort_column=None):
                 feature_importance = None
 
             # ROC CURVE
-            fpr, tpr, cutoffs = roc_curve(y_test, y_pred_proba[:, 1])
+            if state.num_classes == 2:
+                fpr, tpr, cutoffs = roc_curve(y_test, y_pred_proba[:, 1])
+            else:
+                raise NotImplementedError("...")
 
             # PR CURVE
-            precision, recall, _ = precision_recall_curve(y_test, y_pred_proba[:, 1])
+            if state.num_classes == 2:
+                precision, recall, _ = precision_recall_curve(y_test, y_pred_proba[:, 1])
+            else:
+                raise NotImplementedError("...")
 
             for metric_name, metric_fct in scorer_dict.items():
                 if metric_name == "roc_auc":

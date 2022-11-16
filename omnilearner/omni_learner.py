@@ -414,7 +414,7 @@ def OmniLearner_Main():
     state = checkpoint_for_data_upload(state, record_widgets)
 
     # Sidebar widgets
-    logo_placeholder = st.sidebar.empty()
+    logo_placeholder = None  # st.sidebar.empty()
     state = generate_sidebar_elements(state, icon, report, record_widgets, logo_placeholder)
 
     # Analysis Part
@@ -453,9 +453,9 @@ def OmniLearner_Main():
         state = classify_and_plot(state)
 
         # Update logo
-        logo_placeholder.image(
-            icon2, use_column_width=True, caption="OmniLearner " + report["omnilearner_version"]
-        )
+        # logo_placeholder.image(
+        #     icon2, use_column_width=True, caption="OmniLearner " + report["omnilearner_version"]
+        # )
 
         # Generate summary text
         generate_summary(state, report)
