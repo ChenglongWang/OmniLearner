@@ -30,3 +30,78 @@ ALZHEIMER_STATEMENT = """
     Proteome profiling in cerebrospinal fluid reveals novel biomarkers of Alzheimer's disease.
     Molecular Systems Biology, 16(6). doi: [10.15252/msb.20199356](http://doi.org/10.15252/msb.20199356)
 """
+
+ALZHEIMER_INFO = """
+    **INFO:** Found 69255 missing values. Use missing value imputation or xgboost classifier.
+    """
+
+ALZHEIMER_SUBSET = """
+    Create subset
+    This section allows you to specify a subset of data based on values within a comma. Hence, you can exclude data that should not be used at all.
+    Select subset column:
+"""
+
+ALZHEIMER_TARGET = """
+    Classification target (*Required)
+    Classification target refers to the column that contains the variables that are used two distinguish the two classes. In the next section, the unique values of this column can be used to define the two classes.
+    Select target column:
+"""
+
+ALZHEIMER_CLASSES = """
+    Define classes (*Required)
+    For a binary classification task, one needs to define two classes based on the unique values in the `` task column. It is possible to assign multiple values for each class.
+    Number of classes:
+"""
+
+ALZHEIMER_COMPARASION = """
+    Cohort comparison
+    Select cohort column to train on one and predict on another:
+    Select cohort column:
+"""
+
+SAMPLE_SUBSET = """
+    Create subset
+    This section allows you to specify a subset of data based on values within a comma. Hence, you can exclude data that should not be used at all.
+    Select subset column:
+"""
+
+SAMPLE_TARGET = """
+    Classification target (*Required)
+    Classification target refers to the column that contains the variables that are used two distinguish the two classes. In the next section, the unique values of this column can be used to define the two classes.
+    Select target column:
+"""
+
+SAMPLE_CLASSES = """
+    Define classes (*Required)
+    For a binary classification task, one needs to define two classes based on the unique values in the `` task column. It is possible to assign multiple values for each class.
+    Number of classes:
+"""
+SAMPLE_COMPARISION = """
+    Cohort comparison
+    Select cohort column to train on one and predict on another:
+    Select cohort column:
+"""
+
+SAMPLE_3CLS_SUBSET = """
+    Create subset
+    This section allows you to specify a subset of data based on values within a comma. Hence, you can exclude data that should not be used at all.
+    Select subset column:
+"""
+
+SAMPLE_3CLS_TARGET = """
+    Classification target (*Required)
+    Classification target refers to the column that contains the variables that are used two distinguish the two classes. In the next section, the unique values of this column can be used to define the two classes.
+    Select target column:
+"""
+
+SAMPLE_3CLS_CLASSES = """
+    Define classes (*Required)
+    For a binary classification task, one needs to define two classes based on the unique values in the `` task column. It is possible to assign multiple values for each class.
+    Number of classes:
+"""
+
+SAMPLE_3CLS_COMPARISION = """
+    Cohort comparison
+    Select cohort column to train on one and predict on another:
+    Select cohort column:
+"""
