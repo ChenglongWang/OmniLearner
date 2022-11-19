@@ -31,77 +31,73 @@ ALZHEIMER_STATEMENT = """
     Molecular Systems Biology, 16(6). doi: [10.15252/msb.20199356](http://doi.org/10.15252/msb.20199356)
 """
 
-ALZHEIMER_INFO = """
-    **INFO:** Found 69255 missing values. Use missing value imputation or xgboost classifier.
-    """
-
-ALZHEIMER_SUBSET = """
-    Create subset
-    This section allows you to specify a subset of data based on values within a comma. Hence, you can exclude data that should not be used at all.
-    Select subset column:
+GENERATE_SUMMARY_PACKAGES= """
+    OmniLearner ({omnilearner_version}) was utilized for performing data analysis, model execution, and creation of plots and charts.
+    Machine learning was done in Python ({python_version}). Feature tables were imported via the Pandas package ({pandas_version}) and manipulated using the Numpy package ({numpy_version}).
+    The machine learning pipeline was employed using the scikit-learn package ({sklearn_version}).
+    The Plotly ({plotly_version}) library was used for plotting.
 """
 
-ALZHEIMER_TARGET = """
-    Classification target (*Required)
-    Classification target refers to the column that contains the variables that are used two distinguish the two classes. In the next section, the unique values of this column can be used to define the two classes.
-    Select target column:
+CV_PLAIN_TEXT1 = """
+    When using a repeated (n_repeats={}), stratified cross-validation (RepeatedStratifiedKFold, n_splits={}) approach to classify {} vs. {},
+    we achieved a receiver operating characteristic (ROC) with an average AUC (area under the curve) of {:.2f} ({:.2f} std)
+    and precision-recall (PR) Curve with an average AUC of {:.2f} ({:.2f} std).
 """
 
-ALZHEIMER_CLASSES = """
-    Define classes (*Required)
-    For a binary classification task, one needs to define two classes based on the unique values in the `` task column. It is possible to assign multiple values for each class.
-    Number of classes:
+CV_PLAIN_TEXT2 =  """
+    When using a {} cross-validation approach (n_splits={}) to classify {} vs. {}, we achieved a receiver operating characteristic (ROC)
+    with an average AUC (area under the curve) of {:.2f} ({:.2f} std) and Precision-Recall (PR) Curve with an average AUC of {:.2f} ({:.2f} std).
 """
 
-ALZHEIMER_COMPARASION = """
-    Cohort comparison
-    Select cohort column to train on one and predict on another:
-    Select cohort column:
+DATASET_FEATURE_SELECTIONS = """
+    This section allows you to specify a subset of data based on values within a comma.
+    Hence, you can exclude data that should not be used at all.
+ """
+
+DATASET_SUBSET = """
+    This section allows you to specify a subset of data based on values within a comma.
+    Hence, you can exclude data that should not be used at all.
 """
 
-SAMPLE_SUBSET = """
-    Create subset
-    This section allows you to specify a subset of data based on values within a comma. Hence, you can exclude data that should not be used at all.
-    Select subset column:
+DATASET_CLASS_DEFINITIONS = """
+    For a binary classification task, one needs to define two classes based on the
+    unique values in the `{}` task column.
+    It is possible to assign multiple values for each class.
 """
 
-SAMPLE_TARGET = """
-    Classification target (*Required)
-    Classification target refers to the column that contains the variables that are used two distinguish the two classes. In the next section, the unique values of this column can be used to define the two classes.
-    Select target column:
+EDA_PART = """
+    Use exploratory data anlysis on your dateset to identify potential correlations and biases.
+    For more information, please visit
+    [the dedicated ReadTheDocs page](https://omnilearner.readthedocs.io/en/latest/METHODS.html#exploratory-data-analysis-eda).
 """
 
-SAMPLE_CLASSES = """
-    Define classes (*Required)
-    For a binary classification task, one needs to define two classes based on the unique values in the `` task column. It is possible to assign multiple values for each class.
-    Number of classes:
-"""
-SAMPLE_COMPARISION = """
-    Cohort comparison
-    Select cohort column to train on one and predict on another:
-    Select cohort column:
+EXCLUDE_FEATURES = """
+    Exclude some features from the model training by selecting or uploading a CSV file.
+    This can be useful when, e.g., re-running a model without a top feature and assessing the difference in classification accuracy.
 """
 
-SAMPLE_3CLS_SUBSET = """
-    Create subset
-    This section allows you to specify a subset of data based on values within a comma. Hence, you can exclude data that should not be used at all.
-    Select subset column:
+MANUAL_FEATURE_SELECTION = """
+    Manually select a subset of features. If only these features should be used, additionally set the
+    `Feature selection` method to `None`. Otherwise, feature selection will be applied, and only a subset of the manually selected features is used.
+    Be aware of potential overfitting when manually selecting features and check [recommendations](https://omnilearner.readthedocs.io/en/latest/recommendations.html) - page for potential pitfalls.
 """
 
-SAMPLE_3CLS_TARGET = """
-    Classification target (*Required)
-    Classification target refers to the column that contains the variables that are used two distinguish the two classes. In the next section, the unique values of this column can be used to define the two classes.
-    Select target column:
+RESULT_TABLE = """
+    **Info:** `Mean precision` and `Mean recall` values provided in the table above
+    are calculated as the mean of all individual splits shown in the confusion matrix,
+    not the "Sum of all splits" matrix.
 """
 
-SAMPLE_3CLS_CLASSES = """
-    Define classes (*Required)
-    For a binary classification task, one needs to define two classes based on the unique values in the `` task column. It is possible to assign multiple values for each class.
-    Number of classes:
+RUNNING_INFO_TEXT = """
+    **Running info:**
+    - Using the following features: **Class 0 `{}`, Class 1 `{}`**.
+    - Using classifier **`{}`**.
+    - Using a total of  **`{}`** features.
+    - ⚠️ Warning: OmniLearner is intended to be an exploratory tool to assess the performance of algorithms,
+    rather than providing a classification model for production. Please check our [recommendations](https://omnilearner.readthedocs.io/en/latest/recommendations.html) 
+    - page for potential pitfalls and interpret performance metrics accordingly.
 """
 
-SAMPLE_3CLS_COMPARISION = """
-    Cohort comparison
-    Select cohort column to train on one and predict on another:
-    Select cohort column:
-"""
+
+
+
