@@ -529,9 +529,8 @@ def generate_summary(state, report):
 
     text = ""
     # Packages
-    st.markdown(GENERATE_SUMMARY_PACKAGES)
     
-    text += packages_plain_text.format(**report)
+    text += GENERATE_SUMMARY_PACKAGES.format(**report)
 
     # Normalization
     if state.normalization == "None":
@@ -561,7 +560,7 @@ def generate_summary(state, report):
         text += "Features were selected using a {} strategy with the maximum number of {} features. ".format(
             state.feature_method, state.max_features
         )
-    text += "During training, normalization and feature selection was individually performed using the data of each split. "
+    text += "During training, normalization and feature selection was individually performed using the data of each split.  "
 
     # Classification
     params = [f"{k} = {v}" for k, v in state.classifier_params.items()]
@@ -570,9 +569,9 @@ def generate_summary(state, report):
     # Cross-Validation
     if state.cv_method == "RepeatedStratifiedKFold":
         
-        st.markdown(CV_PLAIN_TEXT1)
+        #st.markdown(CV_PLAIN_TEXT1)
         
-        text += cv_plain_text.format(
+        text += CV_PLAIN_TEXT1.format(
             state.cv_repeats,
             state.cv_splits,
             "".join(state.class_0),
@@ -584,9 +583,9 @@ def generate_summary(state, report):
         )
     else:
         
-        st.markdown(CV_PLAIN_TEXT2)
+        #st.markdown(CV_PLAIN_TEXT2)
         
-        text += cv_plain_text.format(
+        text += CV_PLAIN_TEXT2.format(
             state.cv_method,
             state.cv_splits,
             "".join(state.class_0),

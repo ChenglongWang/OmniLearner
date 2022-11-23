@@ -35,11 +35,11 @@ GENERATE_SUMMARY_PACKAGES= """
     OmniLearner ({omnilearner_version}) was utilized for performing data analysis, model execution, and creation of plots and charts.
     Machine learning was done in Python ({python_version}). Feature tables were imported via the Pandas package ({pandas_version}) and manipulated using the Numpy package ({numpy_version}).
     The machine learning pipeline was employed using the scikit-learn package ({sklearn_version}).
-    The Plotly ({plotly_version}) library was used for plotting.
+    The Plotly ({plotly_version}) library was used for plotting.\n
 """
 
 CV_PLAIN_TEXT1 = """
-    When using a repeated (n_repeats={}), stratified cross-validation (RepeatedStratifiedKFold, n_splits={}) approach to classify {} vs. {},
+    \n When using a repeated (n_repeats={}), stratified cross-validation (RepeatedStratifiedKFold, n_splits={}) approach to classify {} vs. {},
     we achieved a receiver operating characteristic (ROC) with an average AUC (area under the curve) of {:.2f} ({:.2f} std)
     and precision-recall (PR) Curve with an average AUC of {:.2f} ({:.2f} std).
 """
