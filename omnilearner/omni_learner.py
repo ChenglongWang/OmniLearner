@@ -9,6 +9,7 @@ import os
 warnings.simplefilter("ignore")
 
 import omnilearner.utils
+from omnilearner.utils.statement import DATASET_FEATURE_SELECTIONS, DATASET_SUBSET, DATASET_CLASS_DEFINITIONS, EDA_PART, EXCLUDE_FEATURES, MANUAL_FEATURE_SELECTION, RESULT_TABLE, RUNNING_INFO_TEXT
 
 # Session State
 
@@ -80,11 +81,7 @@ def checkpoint_for_data_upload(state, record_widgets):
 
         # Dataset -- Subset
         with st.expander("Create subset"):
-            st.markdown(
-                """
-                        This section allows you to specify a subset of data based on values within a comma.
-                        Hence, you can exclude data that should not be used at all."""
-            )
+            st.markdown(DATASET_SUBSET)
             state["subset_column"] = st.selectbox("Select subset column:", ["None"] + state.not_proteins)
 
             if state.subset_column != "None":
@@ -97,12 +94,7 @@ def checkpoint_for_data_upload(state, record_widgets):
 
         # Dataset -- Feature selections
         with st.expander("Classification target (*Required)"):
-            st.markdown(
-                """
-                Classification target refers to the column that contains the variables that are used two distinguish the two classes.
-                In the next section, the unique values of this column can be used to define the two classes.
-            """
-            )
+            st.markdown(DATASET_FEATURE_SELECTIONS)
             state["target_column"] = st.selectbox(
                 "Select target column:",
                 [""] + state.not_proteins,
@@ -118,13 +110,7 @@ def checkpoint_for_data_upload(state, record_widgets):
 
         # Dataset -- Class definitions
         with st.expander("Define classes (*Required)"):
-            st.markdown(
-                f"""
-                For a binary classification task, one needs to define two classes based on the
-                unique values in the `{state.target_column}` task column.
-                It is possible to assign multiple values for each class.
-            """
-            )
+            st.markdown(DATASET_CLASS_DEFINITIONS.format(state.target_column))
             state["class_0"] = multiselect("Select Class 0:", unique_elements_lst, default=None)
             state["class_1"] = multiselect(
                 "Select Class 1:",
@@ -138,13 +124,7 @@ def checkpoint_for_data_upload(state, record_widgets):
 
             # EDA Part
             with st.expander("EDA — Exploratory data analysis (^Recommended)"):
-                st.markdown(
-                    """
-                    Use exploratory data anlysis on your dateset to identify potential correlations and biases.
-                    For more information, please visit
-                    [the dedicated ReadTheDocs page](https://omnilearner.readthedocs.io/en/latest/METHODS.html#exploratory-data-analysis-eda).
-                    """
-                )
+                st.markdown(EDA_PART)
                 state["df_sub_y"] = state.df_sub[state.target_column].isin(state.class_0)
                 state["eda_method"] = st.selectbox("Select an EDA method:", ["None", "PCA", "Hierarchical clustering"])
 
@@ -179,10 +159,7 @@ def checkpoint_for_data_upload(state, record_widgets):
             # Exclude features
             with st.expander("Exclude features"):
                 state["exclude_features"] = []
-                st.markdown(
-                    "Exclude some features from the model training by selecting or uploading a CSV file. "
-                    "This can be useful when, e.g., re-running a model without a top feature and assessing the difference in classification accuracy."
-                )
+                st.markdown(EXCLUDE_FEATURES)
                 # File uploading target_column for exclusion
                 exclusion_file_buffer = st.file_uploader(
                     "Upload your CSV (comma(,) seperated) file here in which each row corresponds to a feature to be excluded.",
@@ -208,11 +185,7 @@ def checkpoint_for_data_upload(state, record_widgets):
 
             # Manual feature selection
             with st.expander("Manually select features"):
-                st.markdown(
-                    "Manually select a subset of features. If only these features should be used, additionally set the "
-                    "`Feature selection` method to `None`. Otherwise, feature selection will be applied, and only a subset of the manually selected features is used."
-                    " Be aware of potential overfitting when manually selecting features and check [recommendations](https://omnilearner.readthedocs.io/en/latest/recommendations.html) - page for potential pitfalls."
-                )
+                st.markdown(MANUAL_FEATURE_SELECTION)
                 manual_users_features = multiselect("Select your features manually:", state.proteins, default=None)
             if manual_users_features:
                 state.proteins = manual_users_features
@@ -328,13 +301,7 @@ def classify_and_plot(state):
         st.subheader(f"Run results for `{state.classifier}`")
         state["summary"] = pd.DataFrame(pd.DataFrame(cv_results).describe())
         st.write(state.summary)
-        st.info(
-            """
-            **Info:** `Mean precision` and `Mean recall` values provided in the table above
-            are calculated as the mean of all individual splits shown in the confusion matrix,
-            not the "Sum of all splits" matrix.
-            """
-        )
+        st.info(RESULT_TABLE)
         get_download_link(state.summary, "run_results.csv")
 
     if state.cohort_checkbox:
@@ -427,16 +394,7 @@ def OmniLearner_Main():
             state["X_cohort"] = subset[state.cohort_column]
 
         # Show the running info text
-        st.info(
-            f"""
-            **Running info:**
-            - Using the following features: **Class 0 `{state.class_0}`, Class 1 `{state.class_1}`**.
-            - Using classifier **`{state.classifier}`**.
-            - Using a total of  **`{len(state.features)}`** features.
-            - ⚠️ Warning: OmniLearner is intended to be an exploratory tool to assess the performance of algorithms,
-                rather than providing a classification model for production. Please check our [recommendations](https://omnilearner.readthedocs.io/en/latest/recommendations.html) - page for potential pitfalls and interpret performance metrics accordingly.
-        """
-        )
+        st.info(RUNNING_INFO_TEXT.format(state.class_0, state.class_1, state.classifier, len(state.features)))
 
         # Plotting and Get the results
         state = classify_and_plot(state)

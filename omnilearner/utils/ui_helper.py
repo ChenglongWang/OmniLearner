@@ -5,7 +5,7 @@ import sklearn
 import numpy as np
 import pandas as pd
 import streamlit as st
-from omnilearner.utils.statement import DISCLAIMER_WARNING, DISCLAIMER_NOTE, DISCLAIMER_CITATION, UPLOAD_STATEMENT, ALZHEIMER_STATEMENT
+from omnilearner.utils.statement import DISCLAIMER_WARNING, DISCLAIMER_NOTE, DISCLAIMER_CITATION, UPLOAD_STATEMENT, ALZHEIMER_STATEMENT, GENERATE_SUMMARY_PACKAGES, CV_PLAIN_TEXT1, CV_PLAIN_TEXT2
 # Checkpoint for XGBoost
 xgboost_installed = False
 try:
@@ -17,10 +17,6 @@ except ModuleNotFoundError:
     pass
 # Widget for recording
 def make_recording_widget(f, widget_values):
-    """
-    Return a function that wraps a streamlit widget and records the
-    widget's values to a global dictionary.
-    """
 
     def wrapper(label, *args, **kwargs):
         widget_value = f(label, *args, **kwargs)
@@ -533,13 +529,8 @@ def generate_summary(state, report):
 
     text = ""
     # Packages
-    packages_plain_text = """
-        OmniLearner ({omnilearner_version}) was utilized for performing data analysis, model execution, and creation of plots and charts.
-        Machine learning was done in Python ({python_version}). Feature tables were imported via the Pandas package ({pandas_version}) and manipulated using the Numpy package ({numpy_version}).
-        The machine learning pipeline was employed using the scikit-learn package ({sklearn_version}).
-        The Plotly ({plotly_version}) library was used for plotting.
-    """
-    text += packages_plain_text.format(**report)
+    
+    text += GENERATE_SUMMARY_PACKAGES.format(**report)
 
     # Normalization
     if state.normalization == "None":
@@ -569,7 +560,7 @@ def generate_summary(state, report):
         text += "Features were selected using a {} strategy with the maximum number of {} features. ".format(
             state.feature_method, state.max_features
         )
-    text += "During training, normalization and feature selection was individually performed using the data of each split. "
+    text += "During training, normalization and feature selection was individually performed using the data of each split.  "
 
     # Classification
     params = [f"{k} = {v}" for k, v in state.classifier_params.items()]
@@ -577,12 +568,10 @@ def generate_summary(state, report):
 
     # Cross-Validation
     if state.cv_method == "RepeatedStratifiedKFold":
-        cv_plain_text = """
-            When using a repeated (n_repeats={}), stratified cross-validation (RepeatedStratifiedKFold, n_splits={}) approach to classify {} vs. {},
-            we achieved a receiver operating characteristic (ROC) with an average AUC (area under the curve) of {:.2f} ({:.2f} std)
-            and precision-recall (PR) Curve with an average AUC of {:.2f} ({:.2f} std).
-        """
-        text += cv_plain_text.format(
+        
+        #st.markdown(CV_PLAIN_TEXT1)
+        
+        text += CV_PLAIN_TEXT1.format(
             state.cv_repeats,
             state.cv_splits,
             "".join(state.class_0),
@@ -593,11 +582,10 @@ def generate_summary(state, report):
             state.summary.loc["std"]["pr_auc"],
         )
     else:
-        cv_plain_text = """
-            When using a {} cross-validation approach (n_splits={}) to classify {} vs. {}, we achieved a receiver operating characteristic (ROC)
-            with an average AUC (area under the curve) of {:.2f} ({:.2f} std) and Precision-Recall (PR) Curve with an average AUC of {:.2f} ({:.2f} std).
-        """
-        text += cv_plain_text.format(
+        
+        #st.markdown(CV_PLAIN_TEXT2)
+        
+        text += CV_PLAIN_TEXT2.format(
             state.cv_method,
             state.cv_splits,
             "".join(state.class_0),
